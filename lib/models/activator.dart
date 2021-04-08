@@ -1,19 +1,15 @@
 import 'dart:mirrors';
 
 class Activator {
-  static createInstance(Type type, [Symbol? constructor, List?
-      arguments, Map<Symbol, dynamic>? namedArguments]) {
+  static createInstance(Type type, [Symbol constructor, List
+      arguments, Map<Symbol, dynamic> namedArguments]) {
     if (type == null) {
       throw new ArgumentError("type: $type");
     }
 
-    if (constructor == null) {
-      constructor = const Symbol("");
-    }
+    constructor ??= const Symbol('');
 
-    if (arguments == null) {
-      arguments = const [];
-    }
+    arguments ??= const [];
 
     var typeMirror = reflectType(type);
     if (typeMirror is ClassMirror) {

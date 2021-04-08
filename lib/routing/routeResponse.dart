@@ -1,8 +1,8 @@
 class ResponseErrorModel
 {
-  String? message;
-  String? code;
-  dynamic? data;
+  String message;
+  String code;
+  dynamic data;
   ResponseErrorModel({this.code,this.data,this.message});
   dynamic toJson()
   {
@@ -15,7 +15,7 @@ class ResponseErrorModel
 }
 class ResponseDataModel
 {
-  bool? isDone=false;
+  bool isDone=false;
   dynamic data;
   ResponseDataModel({this.data, this.isDone});
   dynamic toJson()
@@ -29,8 +29,8 @@ class ResponseDataModel
 }
 class RouteResponse
 {
-  ResponseErrorModel? error;
-  ResponseDataModel? response;
+  ResponseErrorModel error;
+  ResponseDataModel response;
   RouteResponse({this.response,this.error});
   dynamic toJson()
   {

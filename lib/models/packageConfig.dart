@@ -1,8 +1,8 @@
 class PackageConfig
 {
-  String? id; 
-  String? name; 
-  String? type; 
+  String id; 
+  String name; 
+  String type; 
   PackageConfig();
   PackageConfig.fromJson(dynamic data)
   {

@@ -1,9 +1,9 @@
 name: origamicore
-version: 0.0.2
+version: 0.0.5
 description: origami core framework
 homepage: https://github.com/vahidHossaini/origamicore
 environment:
   sdk: '>=2.10.0 <3.0.0'
   
 dev_dependencies:
-  pedantic: ^1.0.0  
+  pedantic: ^1.9.0 

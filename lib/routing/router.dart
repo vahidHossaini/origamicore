@@ -10,13 +10,14 @@ class Router
   {
     routes[domain]=route;
   }
-  static Future<RouteResponse> run(String? domain,String? service,MessageModel message)async
+  static Future<RouteResponse> run(String domain,String service,MessageModel message)async
   {
     if(domain==null || !routes.containsKey(domain))
     {
       return RouteResponse(error: RouteErrorMessage.domainNotExist);
     }
-    if(service==null || routes[domain]==null || !routes[domain]!.services.containsKey(service))
+    // ignore: null_aware_in_logical_operator
+    if(service==null || routes[domain]==null || !routes[domain]?.services?.containsKey(service))
     {
       return RouteResponse(error: RouteErrorMessage.serviceNotExist);
     }
@@ -24,6 +25,40 @@ class Router
     var s= d?.services[service];
     if(s==null) return RouteResponse(error: RouteErrorMessage.serviceNotExist);
     var res=await  s(message);
+    return res;
+  }
+  static Future<RouteResponse> runExternal(String domain,String service,MessageModel message)async
+  {
+    if(domain==null || !routes.containsKey(domain))
+    {
+      return RouteResponse(error: RouteErrorMessage.domainNotExist);
+    }
+    // ignore: null_aware_in_logical_operator
+    if(service==null || routes[domain]==null || !routes[domain]?.externalServices?.containsKey(service))
+    {
+      return RouteResponse(error: RouteErrorMessage.serviceNotExist);
+    }
+    var d=routes[domain];
+    var s= d?.externalServices[service];
+    if(s==null) return RouteResponse(error: RouteErrorMessage.serviceNotExist);
+    if(!s.isPublic)
+    {
+      if(message.session==null)
+      {
+        return null;
+      }
+      if(s.requireProp!=null)
+      {
+        for(var prop in s.requireProp )
+        {
+          if(message.data[prop]==null)
+          {
+            return RouteResponse(error: RouteErrorMessage.access);
+          }
+        }
+      }
+    }
+    var res=await  s.function(message);
     return res;
   }
 }
