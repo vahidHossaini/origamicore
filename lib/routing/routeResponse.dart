@@ -17,26 +17,30 @@ class ResponseDataModel
 {
   bool isDone=false;
   dynamic data;
-  ResponseDataModel({this.data, this.isDone});
+  String session;
+  ResponseDataModel({this.data, this.isDone,this.session});
   dynamic toJson()
   {
     return{
       'isDone':isDone,
       'data':data,
+      'session':session,
     };
   }
   
 }
 class RouteResponse
 {
+  dynamic session;
   ResponseErrorModel error;
   ResponseDataModel response;
-  RouteResponse({this.response,this.error});
+  RouteResponse({this.response,this.error,this.session});
   dynamic toJson()
   {
     return{
       'error':error?.toJson(),
-      'response':response?.toJson()
+      'response':response?.toJson(),
+      'session':session
     };
   }
 }

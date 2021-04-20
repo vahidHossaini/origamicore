@@ -45,13 +45,13 @@ class Router
     {
       if(message.session==null)
       {
-        return null;
+            return RouteResponse(error: RouteErrorMessage.access);
       }
       if(s.requireProp!=null)
       {
         for(var prop in s.requireProp )
         {
-          if(message.data[prop]==null)
+          if(message.session['data'][prop]==null)
           {
             return RouteResponse(error: RouteErrorMessage.access);
           }
